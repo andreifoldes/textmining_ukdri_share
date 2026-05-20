@@ -103,7 +103,7 @@ jupyter: ukdri-md
 </li>
 </ul>
 
-<figure class="example-figure fragment" data-fragment-index="9">
+<figure class="example-figure fragment" data-fragment-index="1">
   <img src="assets/alz71395-fig-0002.jpg"
        alt="Bar chart of dementia research publications in Latin America by topic, with clinical scenarios (15%) and basic science (14%) leading.">
   <figcaption>
