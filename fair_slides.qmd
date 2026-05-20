@@ -253,17 +253,27 @@ jupyter: ukdri-md
   margin-bottom: 0.45em;
 }
 
-/* Inline example figure that appears below the summary-list with
-   bullet 1. Sized to coexist with any expanded summary-body inside the
-   1280x800 slide without triggering scrollable overflow. Click the
-   image to expand it via Quarto's lightbox filter. */
+/* Per-bullet example figures pinned to the bottom of the slide.
+   Multiple .example-figure blocks share the same absolute slot so they
+   swap in place as the user advances bullets — this both avoids
+   pushing figure N below the viewport (where it'd be invisible under
+   the scrollable overflow) and keeps a consistent visual anchor.
+   Visibility is controlled by Reveal.js's `current-visible` fragment
+   class, set per data-fragment-index. Click any image to open it in
+   the lightbox modal. */
 .reveal .example-figure {
-  margin: 0.3em auto 0;
+  position: absolute;
+  bottom: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: 72%;
+  margin: 0;
   text-align: center;
 }
 .reveal .example-figure img {
-  max-width: 62%;
-  max-height: 170px;
+  max-width: 100%;
+  max-height: 200px;
   height: auto;
   width: auto;
   border-radius: 4px;
