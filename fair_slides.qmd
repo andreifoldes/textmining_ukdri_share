@@ -117,6 +117,10 @@ jupyter: ukdri-md
 ![Example output: Hetionet biomedical knowledge graph schema (left) and compound–disease treatment / non-treatment heatmap derived from typed-path features (right) — the kind of structured representation that powers modern drug-repurposing search (Himmelstein et al., *GigaScience* 2023).](assets/hetionet.jpg)
 :::
 
+::: {.example-figure .fragment .current-visible data-fragment-index="5"}
+![Example output: VOSviewer citation-network map of journals — clusters and bridging titles surface emerging research fronts long before lagging citation counts move (van Eck & Waltman, VOSviewer).](assets/vosviewer-citation-network.png)
+:::
+
 ```{=html}
 <style>
 /* UK DRI workshop title-slide accent
