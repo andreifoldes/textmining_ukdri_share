@@ -19,6 +19,7 @@ format:
     theme: default
     transition: none
     code-fold: true
+    lightbox: auto
     title-slide-attributes:
       data-background-color: "#0b1f3a"
 execute:
@@ -102,17 +103,11 @@ jupyter: ukdri-md
   </span>
 </li>
 </ul>
-
-<figure class="example-figure fragment current-visible" data-fragment-index="1">
-  <img src="assets/alz71395-fig-0002.jpg"
-       alt="Bar chart of dementia research publications in Latin America by topic, with clinical scenarios (15%) and basic science (14%) leading.">
-  <figcaption>
-    Example output: text-mined publication-trend analysis of Latin
-    American dementia research by topic
-    (Vazquez-Guajardo et al., <em>Alz &amp; Dem</em> 2026).
-  </figcaption>
-</figure>
 ```
+
+::: {.example-figure .fragment .current-visible data-fragment-index="1"}
+![Example output: text-mined publication-trend analysis of Latin American dementia research by topic (Vazquez-Guajardo et al., *Alz & Dem* 2026).](assets/alz71395-fig-0002.jpg)
+:::
 
 ```{=html}
 <style>
@@ -256,20 +251,23 @@ jupyter: ukdri-md
 
 /* Inline example figure that appears below the summary-list with
    bullet 1. Sized to coexist with any expanded summary-body inside the
-   1280x800 slide without triggering scrollable overflow. */
-.reveal figure.example-figure {
+   1280x800 slide without triggering scrollable overflow. Click the
+   image to expand it via Quarto's lightbox filter. */
+.reveal .example-figure {
   margin: 0.3em auto 0;
   text-align: center;
 }
-.reveal figure.example-figure img {
+.reveal .example-figure img {
   max-width: 62%;
   max-height: 170px;
   height: auto;
   width: auto;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(11,31,58,0.12);
+  cursor: zoom-in;
 }
-.reveal figure.example-figure figcaption {
+.reveal .example-figure figcaption,
+.reveal .example-figure p {
   font-size: 0.48em;
   color: #5b6b80;
   margin-top: 0.25em;
