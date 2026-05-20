@@ -113,6 +113,10 @@ jupyter: ukdri-md
 ![Example output: Alzheimer's Association funding portfolio by CADRO category — molecular mechanisms (Cat A) take 47% while population studies (Cat D) draw under 5% (Kloske et al., *Alz & Dem* 2025).](assets/alz14354-fig-0002.png)
 :::
 
+::: {.example-figure .fragment .current-visible data-fragment-index="3"}
+![Example output: Hetionet biomedical knowledge graph schema (left) and compound–disease treatment / non-treatment heatmap derived from typed-path features (right) — the kind of structured representation that powers modern drug-repurposing search (Himmelstein et al., *GigaScience* 2023).](assets/hetionet.jpg)
+:::
+
 ```{=html}
 <style>
 /* UK DRI workshop title-slide accent
