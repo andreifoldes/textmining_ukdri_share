@@ -2,4 +2,5 @@
 .quarto/
 _freeze/
 *_files/
+!fair_slides_files/
 .ipynb_checkpoints/

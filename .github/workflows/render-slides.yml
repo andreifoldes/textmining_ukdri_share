@@ -1,0 +1,92 @@
+name: Verify slides render
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "fair_slides.qmd"
+      - "fair_slides.html"
+      - "fair_slides_files/**"
+      - "assets/**"
+      - ".github/workflows/render-slides.yml"
+  pull_request:
+    paths:
+      - "fair_slides.qmd"
+      - "fair_slides.html"
+      - "fair_slides_files/**"
+      - "assets/**"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate committed HTML — every assets/* reference resolves
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f fair_slides.html ]]; then
+            echo "::error::fair_slides.html is missing"; exit 1
+          fi
+          missing=0
+          while IFS= read -r ref; do
+            [[ -z "$ref" ]] && continue
+            if [[ ! -e "$ref" ]]; then
+              echo "::error file=fair_slides.html::Missing asset referenced by committed HTML: $ref"
+              missing=$((missing + 1))
+            fi
+          done < <(grep -oE '(href|src|data-src|url\()=?"?(assets|fair_slides_files)/[A-Za-z0-9._/-]+' fair_slides.html \
+            | grep -oE '(assets|fair_slides_files)/[A-Za-z0-9._/-]+' | sort -u)
+          if (( missing > 0 )); then
+            echo "::error::$missing missing asset file(s) — slides will be broken on GitHub Pages"
+            exit 1
+          fi
+          echo "Committed HTML: all referenced assets present."
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Register placeholder 'ukdri-md' Jupyter kernel
+        # The qmd declares `jupyter: ukdri-md`. Quarto resolves the kernel
+        # at parse time even with --no-execute, so we register a kernel by
+        # that name; we never actually execute the cells.
+        run: |
+          python -m pip install --upgrade pip
+          pip install ipykernel
+          python -m ipykernel install --user --name ukdri-md --display-name "ukdri-md (CI placeholder)"
+
+      - name: Re-render fair_slides.qmd (no code execution)
+        run: quarto render fair_slides.qmd --no-execute --output rendered.html
+
+      - name: Validate freshly rendered HTML — every assets/* reference resolves
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=0
+          while IFS= read -r ref; do
+            [[ -z "$ref" ]] && continue
+            if [[ ! -e "$ref" ]]; then
+              echo "::error file=fair_slides.qmd::Rendered HTML references missing asset: $ref"
+              missing=$((missing + 1))
+            fi
+          done < <(grep -oE '(href|src|data-src|url\()=?"?(assets|fair_slides_files)/[A-Za-z0-9._/-]+' rendered.html \
+            | grep -oE '(assets|fair_slides_files)/[A-Za-z0-9._/-]+' | sort -u)
+          if (( missing > 0 )); then
+            echo "::error::$missing missing asset file(s) in fresh render — fix qmd or commit assets"
+            exit 1
+          fi
+          echo "Fresh render: all referenced assets present."
+
+      - name: Upload fresh render as artifact (for inspection on failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fair_slides-rendered
+          path: rendered.html
+          if-no-files-found: ignore

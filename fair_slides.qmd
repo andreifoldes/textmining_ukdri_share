@@ -10,7 +10,6 @@ date-format: "D MMMM YYYY"
 format:
   revealjs:
     slide-level: 3
-    embed-resources: true
     width: 1280
     height: 800
     margin: 0.05
@@ -20,6 +19,9 @@ format:
     transition: none
     code-fold: true
     lightbox: auto
+    controls: true
+    controls-layout: edges
+    controls-back-arrows: visible
     title-slide-attributes:
       data-background-color: "#0b1f3a"
 execute:
@@ -3009,6 +3011,14 @@ addPlotLegendHighlight(Plot.plot({
   ]
 }))
 ```
+
+## Lessons learned
+
+- **No single tool catches everything.**
+- **Most open-data signal lives in prose, not metadata.**
+- **Composite FAIR scores hide the interesting variance.**
+- **Domain and centre effects dominate.**
+- **Pipelines need guardrails.**
 
 ## {.title-slide data-background-color="#0b1f3a"}
 
